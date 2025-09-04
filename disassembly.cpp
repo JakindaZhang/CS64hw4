@@ -25,7 +25,20 @@ int binary_to_decimal(string binary_num){
         }
     return decimal_num;
 }
-
+int binary_to_decimal_for_im(string binary_num){
+    int im_val = 0;
+    if(binary_num[0]== '1'){
+        for(char &c : binary_num) {
+        c ^= 1;
+        }
+        im_val = binary_to_decimal(binary_num);
+        im_val = -1 * im_val - 1;
+    }
+    else{
+        im_val = binary_to_decimal(binary_num);
+    }
+    return im_val;
+}
 string convert_to_register(string reg_binary){
     string reg = "";
     int reg_num = binary_to_decimal(reg_binary);
@@ -143,10 +156,7 @@ string disassemble( string hex ) {
     string rs = convert_to_register(binaryresult.substr(6,5));
     string rt = convert_to_register(binaryresult.substr(11,5));
     
-    int im_num = binary_to_decimal(binaryresult.substr(24,8));
-    if(binaryresult.substr(16,1)=="1"){
-        im_num -= 256;
-    }
+    int im_num = binary_to_decimal_for_im(binaryresult.substr(16,16));
     result.append(rt);
     result.append(", ");
     result.append(rs);
